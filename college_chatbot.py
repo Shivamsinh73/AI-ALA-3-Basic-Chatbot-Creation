@@ -1,121 +1,70 @@
-"""
-College Helpdesk Chatbot
-------------------------
-A simple rule-based chatbot built with Python using if-elif-else conditions.
-Topic: College (admissions, courses, fees, library, hostel, exams, contact)
-
-Run:  python college_chatbot.py
-Type 'bye' or 'quit' to exit.
-"""
-
-import random
-import re
-
-
-def normalize(text: str) -> str:
-    """Lowercase and strip punctuation so matching is easier."""
-    text = text.lower().strip()
-    return re.sub(r"[^\w\s]", "", text)
-
-
-def get_response(user_input: str) -> str:
-    """Rule-based response engine using if-elif-else conditions."""
-    msg = normalize(user_input)
-
-    # --- Greetings ---
-    if re.search(r"\b(hello|hi|hey|namaste)\b", msg):
-        return random.choice([
-            "Hello! Welcome to GMIU College Helpdesk. How can I help you today?",
-            "Hi there! Ask me about admissions, courses, fees, hostel, library or exams.",
-        ])
-
-    # --- Admissions ---
-    elif "admission" in msg or "apply" in msg or "enroll" in msg:
-        return ("Admissions open in June every year. You can apply online through the "
-                "college website or visit the admission cell (Room 101, Admin Block). "
-                "Required documents: 10th & 12th marksheets, ID proof, and 4 photos.")
-
-    # --- Courses ---
-    elif "course" in msg or "branch" in msg or "program" in msg or "degree" in msg:
-        return ("We offer B.Tech (CSE, IT, ECE, ME, CE), BBA, BCA, MBA and MCA. "
-                "Which course would you like to know more about?")
-
-    # --- Fees ---
-    elif "fee" in msg or "fees" in msg or "cost" in msg or "payment" in msg:
-        return ("The annual tuition fee is approximately Rs. 75,000 for B.Tech and "
-                "Rs. 45,000 for BBA/BCA. Fees can be paid semester-wise online or at "
-                "the accounts office. Scholarships are available for meritorious students.")
-
-    # --- Library ---
+# College Helpdesk Chatbot
+# Rule based chatbot using if-elif-else
+# Type bye to exit
+ 
+def get_reply(text):
+    # make everything lowercase so matching is easy
+    msg = text.lower()
+ 
+    # remove some common symbols
+    for ch in "?!.,":
+        msg = msg.replace(ch, "")
+ 
+    words = msg.split()
+ 
+    if "hello" in words or "hi" in words or "hey" in words:
+        return "Hello! Welcome to GMIU College Helpdesk. How can I help you?"
+ 
+    elif "admission" in msg or "apply" in msg:
+        return "Admissions start in June. You can apply online on the college website or visit the admission office in the Admin Block. Documents needed: 10th and 12th marksheet, ID proof and photos."
+ 
+    elif "course" in msg or "branch" in msg or "degree" in msg:
+        return "We have B.Tech (CSE, IT, ECE, ME, CE), BBA, BCA, MBA and MCA."
+ 
+    elif "fee" in msg or "fees" in msg or "payment" in msg:
+        return "B.Tech fee is around Rs. 75,000 per year and BBA/BCA is around Rs. 45,000 per year. You can pay online or at the accounts office."
+ 
     elif "library" in msg or "book" in msg:
-        return ("The central library is open Monday–Saturday, 8 AM to 8 PM. "
-                "Students can borrow up to 4 books for 15 days using their ID card. "
-                "A digital library with e-journals is also available 24x7.")
-
-    # --- Hostel ---
-    elif "hostel" in msg or "accommodation" in msg or "room" in msg:
-        return ("Separate hostels for boys and girls are available on campus. "
-                "Hostel fee is Rs. 60,000 per year including mess. Rooms are allotted "
-                "on a first-come, first-served basis. Contact the hostel warden office.")
-
-    # --- Exams ---
-    elif "exam" in msg or "result" in msg or "marks" in msg or "grade" in msg:
-        return ("Semester exams are held in December and May. Results are published "
-                "on the student portal within 30 days. Revaluation forms must be "
-                "submitted within 7 days of result declaration.")
-
-    # --- Timings ---
-    elif "timing" in msg or "time" in msg or "open" in msg or "hour" in msg:
-        return "College timings are 9:00 AM to 4:30 PM, Monday to Friday. The campus is closed on Sundays and public holidays."
-
-    # --- Location / Contact ---
-    elif "where" in msg or "location" in msg or "address" in msg or "contact" in msg or "phone" in msg:
-        return ("We are located at GMIU Campus, Sector 12, Gandhinagar, Gujarat. "
-                "Phone: 079-1234-5678 | Email: info@gmiu.edu.in")
-
-    # --- Faculty ---
-    elif "faculty" in msg or "teacher" in msg or "professor" in msg:
-        return ("We have 120+ experienced faculty members, most holding PhDs. "
-                "You can view department-wise faculty profiles on the college website.")
-
-    # --- Placements ---
-    elif "placement" in msg or "job" in msg or "package" in msg or "company" in msg:
-        return ("Our placement cell records 85%+ placements. Top recruiters include "
-                "TCS, Infosys, Wipro and Reliance. Highest package last year: 12 LPA, "
-                "average package: 4.5 LPA.")
-
-    # --- Thanks ---
-    elif "thank" in msg:
-        return "You're welcome! Feel free to ask anything else about the college."
-
-    # --- Goodbye ---
-    elif "bye" in msg or "quit" in msg or "exit" in msg:
-        return "Goodbye! Best of luck with your studies. Visit us again!"
-
-    # --- Fallback ---
+        return "Library is open Monday to Saturday, 8 AM to 8 PM. You can take 4 books for 15 days with your ID card."
+ 
+    elif "hostel" in msg or "accommodation" in msg:
+        return "Hostel is available for both boys and girls. Fee is Rs. 60,000 per year with mess."
+ 
+    elif "exam" in msg or "result" in msg or "marks" in msg:
+        return "Exams are held in December and May. Results come on the student portal within 30 days."
+ 
+    elif "timing" in msg or "time" in msg or "open" in msg:
+        return "College timing is 9:00 AM to 4:30 PM, Monday to Friday."
+ 
+    elif "contact" in msg or "phone" in msg or "address" in msg or "location" in msg:
+        return "GMIU Campus, Gandhinagar, Gujarat. Phone: 079-1234-5678, Email: info@gmiu.edu.in"
+ 
+    elif "placement" in msg or "job" in msg or "package" in msg:
+        return "Placement is around 85%. Companies like TCS, Infosys and Wipro visit our college. Highest package is 12 LPA."
+ 
+    elif "thanks" in msg or "thank" in msg:
+        return "You're welcome! Ask me anything else."
+ 
+    elif "bye" in words or "exit" in words or "quit" in words:
+        return "Goodbye! All the best for your studies."
+ 
     else:
-        return ("Sorry, I didn't understand that. You can ask me about admissions, "
-                "courses, fees, library, hostel, exams, placements, timings or contact details.")
-
-
-def main():
-    print("=" * 55)
-    print("       GMIU COLLEGE HELPDESK CHATBOT")
-    print("=" * 55)
-    print("Bot: Hello! I'm the College Helpdesk Bot.")
-    print("Bot: Ask me about admissions, courses, fees, library,")
-    print("     hostel, exams, placements, timings or contact.")
-    print("Bot: Type 'bye' to exit.\n")
-
-    while True:
-        user_input = input("You: ")
-        if not user_input.strip():
-            continue
-        response = get_response(user_input)
-        print("Bot:", response)
-        if normalize(user_input) in ("bye", "quit", "exit", "goodbye"):
-            break
-
-
-if __name__ == "__main__":
-    main()
+        return "Sorry, I did not understand. You can ask about admission, courses, fees, library, hostel, exams, placement, timing or contact."
+ 
+ 
+# main program
+print("---- GMIU College Helpdesk Chatbot ----")
+print("Ask me about admission, courses, fees, library, hostel, exams, placement etc.")
+print("Type bye to exit\n")
+ 
+while True:
+    user = input("You: ")
+ 
+    if user.strip() == "":
+        continue
+ 
+    reply = get_reply(user)
+    print("Bot:", reply)
+ 
+    if reply.startswith("Goodbye"):
+        break
